@@ -12,29 +12,24 @@ public class MapDestroyer : MonoBehaviour {
 
 	public GameObject explosionPrefab;
 
+	int maxBlastRange = 1;
+
 	public void Explode(Vector2 worldPos)
 	{
 		Vector3Int originCell = tilemap.WorldToCell(worldPos);
 
 		ExplodeCell(originCell);
-		if (ExplodeCell(originCell + new Vector3Int(1, 0, 0)))
+		bool[] keepGoing = new bool[] {true, true,true,true};
+		for (int i = 1; i <= maxBlastRange; i++)
 		{
-			ExplodeCell(originCell + new Vector3Int(2, 0, 0));
-		}
-		
-		if (ExplodeCell(originCell + new Vector3Int(0, 1, 0)))
-		{
-			ExplodeCell(originCell + new Vector3Int(0, 2, 0));
-		}
-		
-		if (ExplodeCell(originCell + new Vector3Int(-1, 0, 0)))
-		{
-			ExplodeCell(originCell + new Vector3Int(-2, 0, 0));
-		}
-		
-		if (ExplodeCell(originCell + new Vector3Int(0, -1, 0)))
-		{
-			ExplodeCell(originCell + new Vector3Int(0, -2, 0));
+			if (keepGoing[0])
+				keepGoing[0] = ExplodeCell(originCell + new Vector3Int(i, 0, 0));
+			if (keepGoing[1])
+				keepGoing[1] = ExplodeCell(originCell + new Vector3Int(0, i, 0));
+			if (keepGoing[2])
+				keepGoing[2] = ExplodeCell(originCell + new Vector3Int(-i, 0, 0));
+			if (keepGoing[3])
+				keepGoing[3] = ExplodeCell(originCell + new Vector3Int(0, -i, 0));
 		}
 
 	}

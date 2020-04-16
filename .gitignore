@@ -38,3 +38,6 @@ sysinfo.txt
 .Trashes
 ehthumbs.db
 Thumbs.db
+Bomberman/.vscode/settings.json
+Bomberman/ProjectSettings/ProjectVersion.txt
+*.meta
